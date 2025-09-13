@@ -17,11 +17,10 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-#include "API_delay.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "main.h"
+#include "API_delay.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -60,8 +59,8 @@ uint32_t k = 0;
 uint32_t contador = 0;
 
 
-uint32_t periodos[4] = {500,100,100,1000}; // tiempos de encendido
-uint32_t sizePeriodos =  sizeof(periodos)/sizeof(uint32_t);
+const uint32_t periodos[4] = {500,100,100,1000}; // tiempos de encendido
+const uint32_t sizePeriodos =  sizeof(periodos)/sizeof(uint32_t);
 
 const uint32_t parpadeos = 5; // cantidad de veces que parpadea el LED para cada tiempo de encendido
 
