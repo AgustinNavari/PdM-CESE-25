@@ -1,0 +1,33 @@
+2025-08-29 22:15:00,381 [INFO] Activator:176 - 
+
+
+2025-08-29 22:15:00,383 [INFO] Activator:177 - !SESSION log4j initialized
+2025-08-29 22:15:02,724 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] 
+2025-08-29 22:15:03,631 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] java.net.URISyntaxException: Illegal character in path at index 31: file:/home/agustin/Desktop/CESE 25/PdM/practica_1/.metadata/.log4j2.xml
+2025-08-29 22:15:03,632 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at java.base/java.net.URI$Parser.fail(URI.java:2995)
+2025-08-29 22:15:03,632 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at java.base/java.net.URI$Parser.checkChars(URI.java:3166)
+2025-08-29 22:15:03,632 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at java.base/java.net.URI$Parser.parseHierarchical(URI.java:3248)
+2025-08-29 22:15:03,633 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at java.base/java.net.URI$Parser.parse(URI.java:3196)
+2025-08-29 22:15:03,633 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at java.base/java.net.URI.<init>(URI.java:645)
+2025-08-29 22:15:03,633 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at java.base/java.net.URL.toURI(URL.java:1220)
+2025-08-29 22:15:03,634 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at com.st.stm32cube.common.mx.core.CubeMxInstance.getInstance(CubeMxInstance.java:81)
+2025-08-29 22:15:03,634 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at com.st.stm32cube.common.mx.userauth.UserAuthAdapter.<init>(UserAuthAdapter.java:25)
+2025-08-29 22:15:03,635 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at com.st.stm32cube.common.mx.userauth.UserAuthProvider.getUserAuthAdapter(UserAuthProvider.java:16)
+2025-08-29 22:15:03,635 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at com.st.stm32cube.common.ecosystemintegration.ui.core.MCUEcoSystemIntegrationUiHelper.getUserAuth(MCUEcoSystemIntegrationUiHelper.java:100)
+2025-08-29 22:15:03,636 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at com.st.stm32cube.ide.mcu.userauth.UserAuthStartup.earlyStartup(UserAuthStartup.java:32)
+2025-08-29 22:15:03,636 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:79)
+2025-08-29 22:15:03,637 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:55)
+2025-08-29 22:15:03,637 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+2025-08-29 22:15:03,637 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at org.eclipse.ui.internal.Workbench$39.run(Workbench.java:2733)
+2025-08-29 22:15:03,638 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+2025-08-29 22:15:07,506 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] Aug 29, 2025 10:15:07 PM java.util.prefs.FileSystemPreferences$2 run
+2025-08-29 22:15:07,506 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] WARNING: Could not create system preferences directory. System preferences are unusable.
+2025-08-29 22:15:07,507 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 
+2025-08-29 22:15:31,609 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] Aug 29, 2025 10:15:31 PM java.util.prefs.FileSystemPreferences checkLockFile0ErrorCode
+2025-08-29 22:15:31,611 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] WARNING: Could not lock System prefs. Unix error code 2.
+2025-08-29 22:15:31,611 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 
+2025-08-29 22:15:31,612 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] Aug 29, 2025 10:15:31 PM java.util.prefs.FileSystemPreferences syncWorld
+2025-08-29 22:15:31,612 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] WARNING: Couldn't flush system prefs: java.util.prefs.BackingStoreException: Couldn't get file lock.
+2025-08-29 22:15:31,612 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 
+2025-08-29 22:15:41,169 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 
+2025-08-29 22:15:41,170 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 

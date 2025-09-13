@@ -1,0 +1,4 @@
+../Drivers/API/Src/API_delay.c:4:6:delayInit	16	static
+../Drivers/API/Src/API_delay.c:12:8:delayRead	16	static
+../Drivers/API/Src/API_delay.c:29:6:delayWrite	16	static
+../Drivers/API/Src/API_delay.c:33:8:delayIsRunning	16	static
