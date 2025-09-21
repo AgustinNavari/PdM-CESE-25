@@ -751,11 +751,12 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+// buttonPressed enciende el LED
 void buttonPressed(){
  800075c:	b580      	push	{r7, lr}
  800075e:	af00      	add	r7, sp, #0
-	HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_RESET);
- 8000760:	2200      	movs	r2, #0
+	HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_SET);
+ 8000760:	2201      	movs	r2, #1
  8000762:	2120      	movs	r1, #32
  8000764:	4802      	ldr	r0, [pc, #8]	@ (8000770 <buttonPressed+0x14>)
  8000766:	f000 fcdf 	bl	8001128 <HAL_GPIO_WritePin>
@@ -767,11 +768,12 @@ void buttonPressed(){
 
 08000774 <buttonReleased>:
 
+// buttonReleased apaga el LED
 void buttonReleased(){
  8000774:	b580      	push	{r7, lr}
  8000776:	af00      	add	r7, sp, #0
-	HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_SET);
- 8000778:	2201      	movs	r2, #1
+	HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_RESET);
+ 8000778:	2200      	movs	r2, #0
  800077a:	2120      	movs	r1, #32
  800077c:	4802      	ldr	r0, [pc, #8]	@ (8000788 <buttonReleased+0x14>)
  800077e:	f000 fcd3 	bl	8001128 <HAL_GPIO_WritePin>
@@ -783,6 +785,7 @@ void buttonReleased(){
 
 0800078c <debounceFSM_init>:
 
+// debounceFSM_init carga el estado inicial en BUTTON_UP
 void debounceFSM_init(){
  800078c:	b480      	push	{r7}
  800078e:	af00      	add	r7, sp, #0
@@ -799,6 +802,7 @@ void debounceFSM_init(){
 
 080007a4 <debounceFSM_update>:
 
+// debounceFSM_update maneja los cambios de estado
 void debounceFSM_update(){
  80007a4:	b580      	push	{r7, lr}
  80007a6:	af00      	add	r7, sp, #0
@@ -824,127 +828,126 @@ void debounceFSM_update(){
  80007ca:	a201      	add	r2, pc, #4	@ (adr r2, 80007d0 <debounceFSM_update+0x2c>)
  80007cc:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
  80007d0:	080007e1 	.word	0x080007e1
- 80007d4:	08000801 	.word	0x08000801
- 80007d8:	08000843 	.word	0x08000843
- 80007dc:	08000869 	.word	0x08000869
+ 80007d4:	08000807 	.word	0x08000807
+ 80007d8:	0800084f 	.word	0x0800084f
+ 80007dc:	0800086f 	.word	0x0800086f
 		case BUTTON_UP:
 
-			if(pin){
+			if(!pin){
  80007e0:	4b3a      	ldr	r3, [pc, #232]	@ (80008cc <debounceFSM_update+0x128>)
  80007e2:	781b      	ldrb	r3, [r3, #0]
- 80007e4:	2b00      	cmp	r3, #0
- 80007e6:	d066      	beq.n	80008b6 <debounceFSM_update+0x112>
+ 80007e4:	f083 0301 	eor.w	r3, r3, #1
+ 80007e8:	b2db      	uxtb	r3, r3
+ 80007ea:	2b00      	cmp	r3, #0
+ 80007ec:	d063      	beq.n	80008b6 <debounceFSM_update+0x112>
 				debounceState = BUTTON_FALLING;
- 80007e8:	4b39      	ldr	r3, [pc, #228]	@ (80008d0 <debounceFSM_update+0x12c>)
- 80007ea:	2201      	movs	r2, #1
- 80007ec:	701a      	strb	r2, [r3, #0]
+ 80007ee:	4b38      	ldr	r3, [pc, #224]	@ (80008d0 <debounceFSM_update+0x12c>)
+ 80007f0:	2201      	movs	r2, #1
+ 80007f2:	701a      	strb	r2, [r3, #0]
 				delayInit(&debounce,debounceDelay);
- 80007ee:	2328      	movs	r3, #40	@ 0x28
- 80007f0:	4619      	mov	r1, r3
- 80007f2:	4838      	ldr	r0, [pc, #224]	@ (80008d4 <debounceFSM_update+0x130>)
- 80007f4:	f000 f957 	bl	8000aa6 <delayInit>
-				delayRead(&debounce);
+ 80007f4:	2328      	movs	r3, #40	@ 0x28
+ 80007f6:	4619      	mov	r1, r3
  80007f8:	4836      	ldr	r0, [pc, #216]	@ (80008d4 <debounceFSM_update+0x130>)
- 80007fa:	f000 f965 	bl	8000ac8 <delayRead>
+ 80007fa:	f000 f954 	bl	8000aa6 <delayInit>
+				delayRead(&debounce);
+ 80007fe:	4835      	ldr	r0, [pc, #212]	@ (80008d4 <debounceFSM_update+0x130>)
+ 8000800:	f000 f962 	bl	8000ac8 <delayRead>
 			}
 			break;
- 80007fe:	e05a      	b.n	80008b6 <debounceFSM_update+0x112>
+ 8000804:	e057      	b.n	80008b6 <debounceFSM_update+0x112>
 
 		case BUTTON_FALLING:
 
 			if(delayRead(&debounce)==true){
- 8000800:	4834      	ldr	r0, [pc, #208]	@ (80008d4 <debounceFSM_update+0x130>)
- 8000802:	f000 f961 	bl	8000ac8 <delayRead>
- 8000806:	4603      	mov	r3, r0
- 8000808:	2b00      	cmp	r3, #0
- 800080a:	d056      	beq.n	80008ba <debounceFSM_update+0x116>
+ 8000806:	4833      	ldr	r0, [pc, #204]	@ (80008d4 <debounceFSM_update+0x130>)
+ 8000808:	f000 f95e 	bl	8000ac8 <delayRead>
+ 800080c:	4603      	mov	r3, r0
+ 800080e:	2b00      	cmp	r3, #0
+ 8000810:	d053      	beq.n	80008ba <debounceFSM_update+0x116>
 				pin = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);
- 800080c:	f44f 5100 	mov.w	r1, #8192	@ 0x2000
- 8000810:	482d      	ldr	r0, [pc, #180]	@ (80008c8 <debounceFSM_update+0x124>)
- 8000812:	f000 fc71 	bl	80010f8 <HAL_GPIO_ReadPin>
- 8000816:	4603      	mov	r3, r0
- 8000818:	2b00      	cmp	r3, #0
- 800081a:	bf14      	ite	ne
- 800081c:	2301      	movne	r3, #1
- 800081e:	2300      	moveq	r3, #0
- 8000820:	b2da      	uxtb	r2, r3
- 8000822:	4b2a      	ldr	r3, [pc, #168]	@ (80008cc <debounceFSM_update+0x128>)
- 8000824:	701a      	strb	r2, [r3, #0]
-				if(pin){
- 8000826:	4b29      	ldr	r3, [pc, #164]	@ (80008cc <debounceFSM_update+0x128>)
- 8000828:	781b      	ldrb	r3, [r3, #0]
- 800082a:	2b00      	cmp	r3, #0
- 800082c:	d005      	beq.n	800083a <debounceFSM_update+0x96>
+ 8000812:	f44f 5100 	mov.w	r1, #8192	@ 0x2000
+ 8000816:	482c      	ldr	r0, [pc, #176]	@ (80008c8 <debounceFSM_update+0x124>)
+ 8000818:	f000 fc6e 	bl	80010f8 <HAL_GPIO_ReadPin>
+ 800081c:	4603      	mov	r3, r0
+ 800081e:	2b00      	cmp	r3, #0
+ 8000820:	bf14      	ite	ne
+ 8000822:	2301      	movne	r3, #1
+ 8000824:	2300      	moveq	r3, #0
+ 8000826:	b2da      	uxtb	r2, r3
+ 8000828:	4b28      	ldr	r3, [pc, #160]	@ (80008cc <debounceFSM_update+0x128>)
+ 800082a:	701a      	strb	r2, [r3, #0]
+				if(!pin){										// si paso el tiempo y el boton continua apretado, se enciende el LED y cambia al estado BUTTON_DOWN
+ 800082c:	4b27      	ldr	r3, [pc, #156]	@ (80008cc <debounceFSM_update+0x128>)
+ 800082e:	781b      	ldrb	r3, [r3, #0]
+ 8000830:	f083 0301 	eor.w	r3, r3, #1
+ 8000834:	b2db      	uxtb	r3, r3
+ 8000836:	2b00      	cmp	r3, #0
+ 8000838:	d005      	beq.n	8000846 <debounceFSM_update+0xa2>
 					buttonPressed();
- 800082e:	f7ff ff95 	bl	800075c <buttonPressed>
+ 800083a:	f7ff ff8f 	bl	800075c <buttonPressed>
 					debounceState = BUTTON_DOWN;
- 8000832:	4b27      	ldr	r3, [pc, #156]	@ (80008d0 <debounceFSM_update+0x12c>)
- 8000834:	2202      	movs	r2, #2
- 8000836:	701a      	strb	r2, [r3, #0]
+ 800083e:	4b24      	ldr	r3, [pc, #144]	@ (80008d0 <debounceFSM_update+0x12c>)
+ 8000840:	2202      	movs	r2, #2
+ 8000842:	701a      	strb	r2, [r3, #0]
 				}else{debounceState = BUTTON_UP;}
 			}
 
 			break;
- 8000838:	e03f      	b.n	80008ba <debounceFSM_update+0x116>
+ 8000844:	e039      	b.n	80008ba <debounceFSM_update+0x116>
 				}else{debounceState = BUTTON_UP;}
- 800083a:	4b25      	ldr	r3, [pc, #148]	@ (80008d0 <debounceFSM_update+0x12c>)
- 800083c:	2200      	movs	r2, #0
- 800083e:	701a      	strb	r2, [r3, #0]
+ 8000846:	4b22      	ldr	r3, [pc, #136]	@ (80008d0 <debounceFSM_update+0x12c>)
+ 8000848:	2200      	movs	r2, #0
+ 800084a:	701a      	strb	r2, [r3, #0]
 			break;
- 8000840:	e03b      	b.n	80008ba <debounceFSM_update+0x116>
+ 800084c:	e035      	b.n	80008ba <debounceFSM_update+0x116>
 
 		case BUTTON_DOWN:
 
-			if(!pin){
- 8000842:	4b22      	ldr	r3, [pc, #136]	@ (80008cc <debounceFSM_update+0x128>)
- 8000844:	781b      	ldrb	r3, [r3, #0]
- 8000846:	f083 0301 	eor.w	r3, r3, #1
- 800084a:	b2db      	uxtb	r3, r3
- 800084c:	2b00      	cmp	r3, #0
- 800084e:	d036      	beq.n	80008be <debounceFSM_update+0x11a>
-
+			if(pin){
+ 800084e:	4b1f      	ldr	r3, [pc, #124]	@ (80008cc <debounceFSM_update+0x128>)
+ 8000850:	781b      	ldrb	r3, [r3, #0]
+ 8000852:	2b00      	cmp	r3, #0
+ 8000854:	d033      	beq.n	80008be <debounceFSM_update+0x11a>
 				debounceState = BUTTON_RAISING;
- 8000850:	4b1f      	ldr	r3, [pc, #124]	@ (80008d0 <debounceFSM_update+0x12c>)
- 8000852:	2203      	movs	r2, #3
- 8000854:	701a      	strb	r2, [r3, #0]
+ 8000856:	4b1e      	ldr	r3, [pc, #120]	@ (80008d0 <debounceFSM_update+0x12c>)
+ 8000858:	2203      	movs	r2, #3
+ 800085a:	701a      	strb	r2, [r3, #0]
 				delayInit(&debounce,debounceDelay);
- 8000856:	2328      	movs	r3, #40	@ 0x28
- 8000858:	4619      	mov	r1, r3
- 800085a:	481e      	ldr	r0, [pc, #120]	@ (80008d4 <debounceFSM_update+0x130>)
- 800085c:	f000 f923 	bl	8000aa6 <delayInit>
-				delayRead(&debounce);
+ 800085c:	2328      	movs	r3, #40	@ 0x28
+ 800085e:	4619      	mov	r1, r3
  8000860:	481c      	ldr	r0, [pc, #112]	@ (80008d4 <debounceFSM_update+0x130>)
- 8000862:	f000 f931 	bl	8000ac8 <delayRead>
+ 8000862:	f000 f920 	bl	8000aa6 <delayInit>
+				delayRead(&debounce);
+ 8000866:	481b      	ldr	r0, [pc, #108]	@ (80008d4 <debounceFSM_update+0x130>)
+ 8000868:	f000 f92e 	bl	8000ac8 <delayRead>
 			}
 
 			break;
- 8000866:	e02a      	b.n	80008be <debounceFSM_update+0x11a>
+ 800086c:	e027      	b.n	80008be <debounceFSM_update+0x11a>
 
 		case BUTTON_RAISING:
 
 			if(delayRead(&debounce)==true){
- 8000868:	481a      	ldr	r0, [pc, #104]	@ (80008d4 <debounceFSM_update+0x130>)
- 800086a:	f000 f92d 	bl	8000ac8 <delayRead>
- 800086e:	4603      	mov	r3, r0
- 8000870:	2b00      	cmp	r3, #0
- 8000872:	d026      	beq.n	80008c2 <debounceFSM_update+0x11e>
+ 800086e:	4819      	ldr	r0, [pc, #100]	@ (80008d4 <debounceFSM_update+0x130>)
+ 8000870:	f000 f92a 	bl	8000ac8 <delayRead>
+ 8000874:	4603      	mov	r3, r0
+ 8000876:	2b00      	cmp	r3, #0
+ 8000878:	d023      	beq.n	80008c2 <debounceFSM_update+0x11e>
 				pin = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);
- 8000874:	f44f 5100 	mov.w	r1, #8192	@ 0x2000
- 8000878:	4813      	ldr	r0, [pc, #76]	@ (80008c8 <debounceFSM_update+0x124>)
- 800087a:	f000 fc3d 	bl	80010f8 <HAL_GPIO_ReadPin>
- 800087e:	4603      	mov	r3, r0
- 8000880:	2b00      	cmp	r3, #0
- 8000882:	bf14      	ite	ne
- 8000884:	2301      	movne	r3, #1
- 8000886:	2300      	moveq	r3, #0
- 8000888:	b2da      	uxtb	r2, r3
- 800088a:	4b10      	ldr	r3, [pc, #64]	@ (80008cc <debounceFSM_update+0x128>)
- 800088c:	701a      	strb	r2, [r3, #0]
-				if(!pin){
- 800088e:	4b0f      	ldr	r3, [pc, #60]	@ (80008cc <debounceFSM_update+0x128>)
- 8000890:	781b      	ldrb	r3, [r3, #0]
- 8000892:	f083 0301 	eor.w	r3, r3, #1
- 8000896:	b2db      	uxtb	r3, r3
+ 800087a:	f44f 5100 	mov.w	r1, #8192	@ 0x2000
+ 800087e:	4812      	ldr	r0, [pc, #72]	@ (80008c8 <debounceFSM_update+0x124>)
+ 8000880:	f000 fc3a 	bl	80010f8 <HAL_GPIO_ReadPin>
+ 8000884:	4603      	mov	r3, r0
+ 8000886:	2b00      	cmp	r3, #0
+ 8000888:	bf14      	ite	ne
+ 800088a:	2301      	movne	r3, #1
+ 800088c:	2300      	moveq	r3, #0
+ 800088e:	b2da      	uxtb	r2, r3
+ 8000890:	4b0e      	ldr	r3, [pc, #56]	@ (80008cc <debounceFSM_update+0x128>)
+ 8000892:	701a      	strb	r2, [r3, #0]
+				if(pin){
+ 8000894:	4b0d      	ldr	r3, [pc, #52]	@ (80008cc <debounceFSM_update+0x128>)
+ 8000896:	781b      	ldrb	r3, [r3, #0]
  8000898:	2b00      	cmp	r3, #0
  800089a:	d005      	beq.n	80008a8 <debounceFSM_update+0x104>
 					buttonReleased();

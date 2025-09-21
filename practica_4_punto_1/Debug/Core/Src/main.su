@@ -2,8 +2,8 @@
 ../Core/Src/main.c:120:6:SystemClock_Config	88	static
 ../Core/Src/main.c:168:13:MX_USART2_UART_Init	8	static
 ../Core/Src/main.c:201:13:MX_GPIO_Init	48	static
-../Core/Src/main.c:231:6:buttonPressed	8	static
-../Core/Src/main.c:235:6:buttonReleased	8	static
-../Core/Src/main.c:239:6:debounceFSM_init	4	static
-../Core/Src/main.c:243:6:debounceFSM_update	8	static
-../Core/Src/main.c:306:6:Error_Handler	8	static,ignoring_inline_asm
+../Core/Src/main.c:232:6:buttonPressed	8	static
+../Core/Src/main.c:237:6:buttonReleased	8	static
+../Core/Src/main.c:242:6:debounceFSM_init	4	static
+../Core/Src/main.c:247:6:debounceFSM_update	8	static
+../Core/Src/main.c:309:6:Error_Handler	8	static,ignoring_inline_asm

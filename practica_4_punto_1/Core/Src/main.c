@@ -228,18 +228,22 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+// buttonPressed enciende el LED
 void buttonPressed(){
-	HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_RESET);
-}
-
-void buttonReleased(){
 	HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_SET);
 }
 
+// buttonReleased apaga el LED
+void buttonReleased(){
+	HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_RESET);
+}
+
+// debounceFSM_init carga el estado inicial en BUTTON_UP
 void debounceFSM_init(){
 	debounceState = BUTTON_UP;
 }
 
+// debounceFSM_update maneja los cambios de estado
 void debounceFSM_update(){
 
 	pin = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin); // lee el estado del pin
@@ -247,7 +251,7 @@ void debounceFSM_update(){
 	switch(debounceState){
 		case BUTTON_UP:
 
-			if(pin){
+			if(!pin){
 				debounceState = BUTTON_FALLING;
 				delayInit(&debounce,debounceDelay);
 				delayRead(&debounce);
@@ -258,7 +262,7 @@ void debounceFSM_update(){
 
 			if(delayRead(&debounce)==true){
 				pin = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);
-				if(pin){
+				if(!pin){										// si paso el tiempo y el boton continua apretado, se enciende el LED y cambia al estado BUTTON_DOWN
 					buttonPressed();
 					debounceState = BUTTON_DOWN;
 				}else{debounceState = BUTTON_UP;}
@@ -268,8 +272,7 @@ void debounceFSM_update(){
 
 		case BUTTON_DOWN:
 
-			if(!pin){
-
+			if(pin){
 				debounceState = BUTTON_RAISING;
 				delayInit(&debounce,debounceDelay);
 				delayRead(&debounce);
@@ -281,7 +284,7 @@ void debounceFSM_update(){
 
 			if(delayRead(&debounce)==true){
 				pin = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);
-				if(!pin){
+				if(pin){										// si paso el tiempo y el boton continua suelto, se apaga el LED y cambia al estado BUTTON_UP
 					buttonReleased();
 					debounceState = BUTTON_UP;
 				}else{
