@@ -22,3 +22,5 @@ Al iniciar el programa se envia la configuracion de la UART. Para verlo en la te
 
 ![Ejemplo de funcionamiento](img/Docklight.jpeg)
 
+=)
+
