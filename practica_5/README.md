@@ -20,7 +20,7 @@ Para poder probar el codigo utilice la aplicacion "Docklight" en windows. Conect
 
 Al iniciar el programa se envia la configuracion de la UART. Para verlo en la terminal es necesario resetear el micro con el boton de reset.
 
-![Ejemplo de funcionamiento](img/Docklight.jpeg)
+![Ejemplo de funcionamiento](Docklight.jpeg)
 
 =)
 
